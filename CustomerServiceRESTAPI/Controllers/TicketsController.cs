@@ -25,7 +25,7 @@ namespace CustomerServiceRESTAPI.Controllers
 
         // GET: api/tickets
         [HttpGet]
-        public async Task<IActionResult> GetAsync()
+        public IActionResult Get()
         {
             var tickets = _ticketRepository.GetAll();
             var result = AutoMapper.Mapper.Map<IEnumerable<TicketWithClientDto>>(tickets);

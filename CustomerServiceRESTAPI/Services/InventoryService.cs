@@ -17,9 +17,10 @@ namespace CustomerServiceRESTAPI.Services
             return JsonConvert.DeserializeObject<ProductDto>(result);
         }
 
-        public Task<IEnumerable<ProductDto>> GetProductsAsync()
+        public async Task<IEnumerable<ProductDto>> GetProductsAsync()
         {
-            throw new NotImplementedException();
+            var result = await _client.GetStringAsync("https://inventory343.azurewebsites.net/api/products");
+            return JsonConvert.DeserializeObject<IEnumerable<ProductDto>>(result);
         }
     }
 }
