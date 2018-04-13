@@ -7,6 +7,7 @@ using CustomerServiceAPI.Services;
 using CustomerServiceRESTAPI.Entities;
 using CustomerServiceRESTAPI.Models;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace CustomerServiceRESTAPI.Services
 {
@@ -14,18 +15,28 @@ namespace CustomerServiceRESTAPI.Services
     {
         static readonly HttpClient client = new HttpClient();
 
-        public async Task<List<AgentDto>> GetAgentsAsync()
+        public async Task<IEnumerable<AgentDto>> GetAgentsAsync()
         {
-            var serializer = new DataContractJsonSerializer(typeof(List<AgentDto>));
-            var agentsStream = client.GetStreamAsync("http://kennuware-1772705765.us-east-1.elb.amazonaws.com/api/employee");
-            var agents = serializer.ReadObject(await agentsStream) as List<AgentDto>;
-            return agents;
+            var result = await client.GetAsync("http://kennuware-1772705765.us-east-1.elb.amazonaws.com/api/employee");
+            if (!result.IsSuccessStatusCode) return null;
+
+            var parsedResponse = JsonConvert.DeserializeObject<AgentListResponse>(await result.Content.ReadAsStringAsync());
+
+            return parsedResponse.Data;
         }
 
-        public AgentDto GetAgent(int id)
+        public async Task<AgentDto> GetAgentAsync(int id)
         {
-            throw new NotImplementedException();
+            var result = await client.GetAsync($"http://kennuware-1772705765.us-east-1.elb.amazonaws.com/api/employee?id={id}");
+            if (!result.IsSuccessStatusCode) return null;
+
+            return JsonConvert.DeserializeObject<AgentDto>(await result.Content.ReadAsStringAsync());
         }
 
+    }
+
+    class AgentListResponse
+    {
+        public IEnumerable<AgentDto> Data { get; set; }
     }
 }

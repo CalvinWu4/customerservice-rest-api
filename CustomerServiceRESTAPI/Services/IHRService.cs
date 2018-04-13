@@ -8,7 +8,7 @@ namespace CustomerServiceAPI.Services
 {
     public interface IHRService
     {
-        Task<List<AgentDto>> GetAgentsAsync();
-        AgentDto GetAgent(int id);
+        Task<IEnumerable<AgentDto>> GetAgentsAsync();
+        Task<AgentDto> GetAgentAsync(int id);
     }
 }
