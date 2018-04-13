@@ -49,7 +49,7 @@ namespace CustomerServiceRESTAPI
             AutoMapper.Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<Entities.Client, Models.ClientDto>();
-                cfg.CreateMap<Entities.Client, Models.ClientWithTicketsDto>();
+                cfg.CreateMap<Entities.Client, Models.ClientWithTicketsAndReviewsDto>();
                 cfg.CreateMap<Models.ClientForCreationDto, Entities.Client>();
 
                 cfg.CreateMap<Entities.Ticket, Models.TicketDto>();
@@ -57,6 +57,7 @@ namespace CustomerServiceRESTAPI
                 cfg.CreateMap<Models.TicketForCreationDto, Entities.Ticket>();
 
                 cfg.CreateMap<Entities.Review, Models.ReviewDto>();
+                cfg.CreateMap<Entities.Review, Models.ReviewWithClientDto>();
                 cfg.CreateMap<Models.ReviewDtoForCreation, Entities.Review>();
             });
 

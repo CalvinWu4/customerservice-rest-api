@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CustomerServiceRESTAPI.Models
 {
-    public class ClientWithTicketsDto
+    public class ClientWithTicketsAndReviewsDto
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -11,5 +11,6 @@ namespace CustomerServiceRESTAPI.Models
         public string Email { get; set; }
 
         public ICollection<TicketDto> Tickets { get; set; } = new List<TicketDto>();
+        public ICollection<ReviewDto> Reviews { get; set; } = new List<ReviewDto>();
     }
 }

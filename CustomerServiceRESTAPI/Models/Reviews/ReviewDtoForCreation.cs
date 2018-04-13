@@ -10,9 +10,5 @@ namespace CustomerServiceRESTAPI.Models
 
         [Required(ErrorMessage = "Content is required")]
         public string Content { get; set; }
-
-        [Required(ErrorMessage = "Date created is required")]
-        public string DateCreated { get; set; }
-
     }
 }

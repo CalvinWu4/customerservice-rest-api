@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CustomerServiceRESTAPI.Entities
@@ -18,5 +19,8 @@ namespace CustomerServiceRESTAPI.Entities
         [Required]
         public string DateCreated { get; set; }
 
+        [ForeignKey("ClientId")]
+        public Client Client { get; set; }
+        public int ClientId { get; set; }
     }
 }

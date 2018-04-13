@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using CustomerServiceRESTAPI.Entities;
 using CustomerServiceRESTAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CustomerServiceRESTAPI.Services
 {
-    public class ReviewRepository : IReviewRepository
+    public class ReviewRepository : IDBRepository<Review>
     {
         private Context _context;
 
@@ -15,34 +16,34 @@ namespace CustomerServiceRESTAPI.Services
             _context = context;
         }
 
-        public void AddReview(Review review)
+        public void Add(Review review)
         {
             _context.Add(review);
         }
 
-        public Review GetReview(int Id)
+        public Review Get(int Id)
         {
-            return _context.Reviews.FirstOrDefault(t => t.Id == Id);
+            return _context.Reviews.Include(r => r.Client).FirstOrDefault(t => t.Id == Id);
         }
 
-        public IEnumerable<Review> GetReviews()
+        public IEnumerable<Review> GetAll()
         {
-            return _context.Reviews.OrderBy(t => t.DateCreated).ToList();
+            return _context.Reviews.Include(r => r.Client).OrderBy(t => t.DateCreated).ToList();
+        }
+
+        public void Update(Review review)
+        {
+            _context.Update(review);
+        }
+
+        public void Delete(Review review)
+        {
+            _context.Remove(review);
         }
 
         public bool Save()
         {
             return (_context.SaveChanges() >= 0);
-        }
-
-        public void DeleteReview(Review review)
-        {
-            _context.Remove(review);
-        }
-
-        public void UpdateReview(Review review)
-        {
-            _context.Update(review);
         }
     }
 }

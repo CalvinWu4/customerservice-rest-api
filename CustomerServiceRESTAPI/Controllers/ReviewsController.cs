@@ -14,55 +14,54 @@ namespace CustomerServiceRESTAPI.Controllers
     public class ReviewsController : Controller
     {
         ReviewRepository _reviewRepository;
+        ClientRepository _clientRepository;
 
-        public ReviewsController(ReviewRepository reviewRepository)
+        public ReviewsController(ReviewRepository reviewRepository, ClientRepository clientRepository)
         {
             _reviewRepository = reviewRepository;
+            _clientRepository = clientRepository;
         }
 
         // GET: api/reviews
         [HttpGet]
-        public async Task<IActionResult> GetAsync()
+        public IActionResult Get()
         {
-            var review = _reviewRepository.GetReviews();
-            var results = Mapper.Map<IEnumerable<ReviewDto>>(review);
+            var reviews = _reviewRepository.GetAll();
+            var results = Mapper.Map<IEnumerable<ReviewWithClientDto>>(reviews);
 
-            var HRService = new HRService();
-            var agent = await HRService.GetAgentsAsync();
-
-            return Ok(_reviewRepository.GetReviews());
+            return Ok(results);
         }
 
         // GET: api/reviews/1
         [HttpGet("{id}", Name = "GetReview")]
         public IActionResult Get(int id)
         {
-            var review = _reviewRepository.GetReview(id);
-            if (review == null)
-            {
-                return NotFound();
-            }
+            var review = _reviewRepository.Get(id);
+            if (review == null) return NotFound();
 
-            var result = Mapper.Map<ReviewDto>(review);
-
+            var result = Mapper.Map<ReviewWithClientDto>(review);
             return Ok(result);
         }
 
-        // POST api/reviews
+        // Get api/reviews
         [HttpPost]
-        public IActionResult Post([FromBody]ReviewDtoForCreation review)
+        public IActionResult Post([FromBody]ReviewDtoForCreation review, [FromQuery(Name = "clientId")]int clientId)
         {
             if (review == null) return BadRequest();
 
             var finalReview = Mapper.Map<Review>(review);
-            _reviewRepository.AddReview(finalReview);
+            var client = _clientRepository.Get(clientId);
+            if (client == null) return NotFound("Could not find client");
 
-            if (!_reviewRepository.Save())
-            {
-                return BadRequest();
-            }
+            // Set default time created
+            finalReview.DateCreated = DateTime.Now.ToUniversalTime().ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'Z'");
 
-            return CreatedAtRoute("GetReview", new { id = finalReview.Id }, finalReview);
+            client.Reviews.Add(finalReview);
+            if (!_clientRepository.Save()) return BadRequest("Could not create review");
+
+
+            var result = AutoMapper.Mapper.Map<ReviewWithClientDto>(finalReview);
+            return CreatedAtRoute("GetReview", new { id = finalReview.Id }, result);
         }
 
         // PUT api/reviews/1
@@ -71,14 +70,12 @@ namespace CustomerServiceRESTAPI.Controllers
         {
             if (reviewData == null) return BadRequest();
 
-            var review = _reviewRepository.GetReview(id);
+            var review = _reviewRepository.Get(id);
             if (review == null) return NotFound();
 
             review.Content = reviewData.Content == null ? review.Content : reviewData.Content;
-            review.DateCreated = reviewData.DateCreated == null ? review.DateCreated : reviewData.DateCreated;
 
-
-            _reviewRepository.UpdateReview(review);
+            _reviewRepository.Update(review);
             if (!_reviewRepository.Save()) return BadRequest();
 
             return NoContent();
@@ -88,10 +85,10 @@ namespace CustomerServiceRESTAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var review = _reviewRepository.GetReview(id);
+            var review = _reviewRepository.Get(id);
             if (review == null) NotFound();
 
-            _reviewRepository.DeleteReview(review);
+            _reviewRepository.Delete(review);
             if (!_reviewRepository.Save())
             {
                 return BadRequest();

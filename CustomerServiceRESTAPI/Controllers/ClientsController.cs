@@ -25,7 +25,7 @@ namespace CustomerServiceRESTAPI.Controllers
         public IActionResult Get()
         {
             var clients = _clientRepository.GetAll();
-            var result = AutoMapper.Mapper.Map<IEnumerable<ClientWithTicketsDto>>(clients);
+            var result = AutoMapper.Mapper.Map<IEnumerable<ClientWithTicketsAndReviewsDto>>(clients);
 
             return Ok(result);
         }
@@ -37,7 +37,7 @@ namespace CustomerServiceRESTAPI.Controllers
             var client = _clientRepository.Get(id);
             if (client == null) return NotFound("Client not found");
 
-            var result = AutoMapper.Mapper.Map<ClientWithTicketsDto>(client);
+            var result = AutoMapper.Mapper.Map<ClientWithTicketsAndReviewsDto>(client);
             return Ok(result);
         }
 
@@ -50,7 +50,7 @@ namespace CustomerServiceRESTAPI.Controllers
             _clientRepository.Add(client);
             if (!_clientRepository.Save()) return BadRequest("Could not create client");
 
-            var result = AutoMapper.Mapper.Map<ClientWithTicketsDto>(client);
+            var result = AutoMapper.Mapper.Map<ClientWithTicketsAndReviewsDto>(client);
             return Ok(result);
         }
 

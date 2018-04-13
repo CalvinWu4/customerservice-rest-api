@@ -22,5 +22,6 @@ namespace CustomerServiceRESTAPI.Entities
         public string Email { get; set; }
 
         public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
+        public ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
 }
