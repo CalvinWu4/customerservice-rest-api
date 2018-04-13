@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using CustomerServiceAPI.Entities;
-using CustomerServiceAPI.Models;
+using CustomerServiceRESTAPI.Entities;
+using CustomerServiceRESTAPI.Models;
 
-namespace CustomerServiceAPI.Services
+namespace CustomerServiceRESTAPI.Services
 {
     public interface IReviewRepository
     {

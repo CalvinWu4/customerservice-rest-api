@@ -33,6 +33,7 @@ namespace CustomerServiceRESTAPI
 
             services.AddScoped<ClientRepository>();
             services.AddScoped<TicketRepository>();
+            services.AddScoped<ReviewRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +53,9 @@ namespace CustomerServiceRESTAPI
                 cfg.CreateMap<Entities.Ticket, Models.TicketDto>();
                 cfg.CreateMap<Entities.Ticket, Models.TicketWithClientDto>();
                 cfg.CreateMap<Models.TicketForCreationDto, Entities.Ticket>();
+
+                cfg.CreateMap<Entities.Review, Models.ReviewDto>();
+                cfg.CreateMap<Models.ReviewDtoForCreation, Entities.Review>();
             });
 
             app.UseMvc();

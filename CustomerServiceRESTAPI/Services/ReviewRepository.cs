@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CustomerServiceAPI.Entities;
-using CustomerServiceAPI.Models;
+using CustomerServiceRESTAPI.Entities;
+using CustomerServiceRESTAPI.Models;
 
-namespace CustomerServiceAPI.Services
+namespace CustomerServiceRESTAPI.Services
 {
     public class ReviewRepository : IReviewRepository
     {

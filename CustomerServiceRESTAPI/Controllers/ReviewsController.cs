@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
-using CustomerServiceAPI.Models;
-using CustomerServiceAPI.Entities;
-using CustomerServiceAPI.Services;
+using CustomerServiceRESTAPI.Models;
+using CustomerServiceRESTAPI.Entities;
+using CustomerServiceRESTAPI.Services;
 
-namespace CustomerServiceAPI.Controllers
+namespace CustomerServiceRESTAPI.Controllers
 {
     [Route("api/[controller]")]
     public class ReviewsController : Controller
@@ -22,10 +22,13 @@ namespace CustomerServiceAPI.Controllers
 
         // GET: api/reviews
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> GetAsync()
         {
             var review = _reviewRepository.GetReviews();
             var results = Mapper.Map<IEnumerable<ReviewDto>>(review);
+
+            var HRService = new HRService();
+            var agent = await HRService.GetAgentsAsync();
 
             return Ok(_reviewRepository.GetReviews());
         }

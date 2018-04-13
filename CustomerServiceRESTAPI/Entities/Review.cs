@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CustomerServiceAPI.Entities
+namespace CustomerServiceRESTAPI.Entities
 {
     public class Review
     {

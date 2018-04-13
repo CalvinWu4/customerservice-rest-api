@@ -1,5 +1,5 @@
 ﻿using System;
-namespace CustomerServiceAPI.Models
+namespace CustomerServiceRESTAPI.Models
 {
     public class ReviewDto
     {

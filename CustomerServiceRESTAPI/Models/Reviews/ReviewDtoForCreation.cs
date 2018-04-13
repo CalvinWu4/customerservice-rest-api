@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace CustomerServiceAPI.Models
+namespace CustomerServiceRESTAPI.Models
 {
     public class ReviewDtoForCreation
     {
