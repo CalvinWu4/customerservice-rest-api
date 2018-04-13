@@ -43,16 +43,7 @@ namespace CustomerServiceRESTAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            AutoMapper.Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<Entities.Client, Models.ClientDto>();
-                cfg.CreateMap<Entities.Client, Models.ClientWithTicketsDto>();
-                cfg.CreateMap<Models.ClientForCreationDto, Entities.Client>();
-
-                cfg.CreateMap<Entities.Ticket, Models.TicketDto>();
-                cfg.CreateMap<Entities.Ticket, Models.TicketWithClientDto>();
-                cfg.CreateMap<Models.TicketForCreationDto, Entities.Ticket>();
-            });
+            AutoMapperConfig.Config();
 
             app.UseMvc();
         }
