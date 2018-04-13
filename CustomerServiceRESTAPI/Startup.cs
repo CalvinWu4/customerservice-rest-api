@@ -33,6 +33,7 @@ namespace CustomerServiceRESTAPI
 
             services.AddScoped<ClientRepository>();
             services.AddScoped<TicketRepository>();
+            services.AddScoped<InventoryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

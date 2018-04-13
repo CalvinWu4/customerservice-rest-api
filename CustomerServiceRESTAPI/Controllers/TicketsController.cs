@@ -14,16 +14,18 @@ namespace CustomerServiceRESTAPI.Controllers
     {
         TicketRepository _ticketRepository;
         ClientRepository _clientRepository;
+        InventoryService _inventoryService;
 
-        public TicketsController(TicketRepository ticketRepository, ClientRepository clientRepository)
+        public TicketsController(TicketRepository ticketRepository, ClientRepository clientRepository, InventoryService inventoryService)
         {
             _ticketRepository = ticketRepository;
             _clientRepository = clientRepository;
+            _inventoryService = inventoryService;
         }
 
         // GET: api/tickets
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> GetAsync()
         {
             var tickets = _ticketRepository.GetAll();
             var result = AutoMapper.Mapper.Map<IEnumerable<TicketWithClientDto>>(tickets);
