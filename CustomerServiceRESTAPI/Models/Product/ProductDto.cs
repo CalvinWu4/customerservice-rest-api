@@ -1,12 +1,12 @@
 ﻿using System;
 namespace CustomerServiceRESTAPI.Models
 {
-    public class TicketDto
+    public class ProductDto
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
+        public string SerialNumber { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
         public string Status { get; set; }
-        public string ProductSerialNumber { get; set; }
+        public string Warehouse { get; set; }
     }
 }

@@ -13,6 +13,7 @@
     <Folder Include="Models\Ticket\" />
     <Folder Include="Models\Reviews\" />
     <Folder Include="Models\Agent\" />
+    <Folder Include="Models\Product\" />
   </ItemGroup>
 
   <ItemGroup>

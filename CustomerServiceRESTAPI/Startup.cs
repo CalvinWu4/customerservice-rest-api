@@ -36,6 +36,7 @@ namespace CustomerServiceRESTAPI
             services.AddScoped<ReviewRepository>();
 
             services.AddScoped<HRService>();
+            services.AddScoped<InventoryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,20 +47,7 @@ namespace CustomerServiceRESTAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            AutoMapper.Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<Entities.Client, Models.ClientDto>();
-                cfg.CreateMap<Entities.Client, Models.ClientWithTicketsAndReviewsDto>();
-                cfg.CreateMap<Models.ClientForCreationDto, Entities.Client>();
-
-                cfg.CreateMap<Entities.Ticket, Models.TicketDto>();
-                cfg.CreateMap<Entities.Ticket, Models.TicketWithClientDto>();
-                cfg.CreateMap<Models.TicketForCreationDto, Entities.Ticket>();
-
-                cfg.CreateMap<Entities.Review, Models.ReviewDto>();
-                cfg.CreateMap<Entities.Review, Models.ReviewWithClientDto>();
-                cfg.CreateMap<Models.ReviewDtoForCreation, Entities.Review>();
-            });
+            AutoMapperConfig.Config();
 
             app.UseMvc();
         }
