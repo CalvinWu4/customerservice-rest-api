@@ -19,6 +19,9 @@ namespace CustomerServiceRESTAPI.Entities
         [Required]
         public string Status { get; set; }
 
+        [Required]
+        public string ProductSerialNumber { get; set; }
+
         [ForeignKey("ClientId")]
         public Client Client { get; set; }
         public int ClientId { get; set; }

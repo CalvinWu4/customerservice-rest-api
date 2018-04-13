@@ -46,14 +46,30 @@ namespace CustomerServiceRESTAPI.Controllers
 
         // POST api/tickets
         [HttpPost]
-        public IActionResult Post([FromBody]TicketForCreationDto ticketForCreation, [FromQuery(Name = "clientId")]int clientId)
+        public async Task<IActionResult> Post([FromBody]TicketForCreationDto ticketForCreation, [FromQuery(Name = "clientId")]int clientId)
         {
             var ticket = AutoMapper.Mapper.Map<Ticket>(ticketForCreation);
+            // Look up the client by id
             var client = _clientRepository.Get(clientId);
+            // Ensure client exists
             if (client == null) return NotFound("Client not found");
-
+            // Look up the product by serial number
+            var productDetails = await _inventoryService.GetProductAsync(ticketForCreation.ProductSerialNumber);
+            // Ensure the product exists
+            if (productDetails == null)
+            {
+                return NotFound("Serial number not found");
+            }
+            // Ensure the product has been sold
+            if (!(productDetails.Status == "sold"))
+            {
+                return BadRequest("This device has not been sold");
+            }
+            // Create the ticket
             // Tickets are set to Status=new by default
             ticket.Status = "new";
+            // Tickets are associated with the product they were created for
+            ticket.ProductSerialNumber = productDetails.SerialNumber;
 
             client.Tickets.Add(ticket);
             _clientRepository.Update(client);

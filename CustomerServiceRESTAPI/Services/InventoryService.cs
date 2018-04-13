@@ -13,8 +13,12 @@ namespace CustomerServiceRESTAPI.Services
 
         public async Task<ProductDto> GetProductAsync(string serialNumber)
         {
-            var result = await _client.GetStringAsync($"https://inventory343.azurewebsites.net/api/products/{serialNumber}");
-            return JsonConvert.DeserializeObject<ProductDto>(result);
+            var result = await _client.GetAsync($"https://inventory343.azurewebsites.net/api/products/{serialNumber}");
+            if (result.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<ProductDto>(await result.Content.ReadAsStringAsync());
+            } else
+            return null;
         }
 
         public async Task<IEnumerable<ProductDto>> GetProductsAsync()
