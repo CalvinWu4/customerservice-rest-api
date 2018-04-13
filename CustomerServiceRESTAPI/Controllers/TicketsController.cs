@@ -25,9 +25,13 @@ namespace CustomerServiceRESTAPI.Controllers
 
         // GET: api/tickets
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery(Name = "productSerialNumber")]string productSerialNumber, [FromQuery(Name = "clientId")]int clientId = -1)
         {
             var tickets = _ticketRepository.GetAll();
+
+            if (clientId != -1) tickets = tickets.Where(t => t.ClientId == clientId);
+            if (productSerialNumber != null) tickets = tickets.Where(t => t.ProductSerialNumber == productSerialNumber);
+
             var result = AutoMapper.Mapper.Map<IEnumerable<TicketWithClientDto>>(tickets);
 
             return Ok(result);
