@@ -24,9 +24,13 @@ namespace CustomerServiceRESTAPI.Controllers
 
         // GET: api/reviews
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery(Name = "clientId")]int clientId = -1, [FromQuery]int agentId = -1)
         {
             var reviews = _reviewRepository.GetAll();
+
+            if (clientId != -1) reviews = reviews.Where(r => r.ClientId == clientId);
+            if (agentId != -1) reviews = reviews.Where(r => r.AgentId == agentId);
+
             var results = Mapper.Map<IEnumerable<ReviewWithClientDto>>(reviews);
 
             return Ok(results);
@@ -34,7 +38,7 @@ namespace CustomerServiceRESTAPI.Controllers
 
         // GET: api/reviews/1
         [HttpGet("{id}", Name = "GetReview")]
-        public IActionResult Get(int id)
+        public IActionResult GetAll(int id)
         {
             var review = _reviewRepository.Get(id);
             if (review == null) return NotFound();
