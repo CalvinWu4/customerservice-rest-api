@@ -112,5 +112,23 @@ namespace CustomerServiceRESTAPI.Controllers
 
             return NoContent();
         }
+
+        // POST api/tickets/5/replace
+        [Route("{id}/replace")]
+        [HttpPost]
+        public async Task<IActionResult> Replace(int id)
+        {
+            // Look up the ticket
+            var ticket = _ticketRepository.Get(id);
+            if (ticket == null) return NotFound("Could not find ticket");
+            // Place the device replacement request
+            if ((await new SalesService().RequestReplacementDevice(ticket)))
+            {
+                // Request succeeded
+                return Ok();
+            }
+            // Request failed
+            return BadRequest("Sales' endpoint is still down");
+        }
     }
 }
