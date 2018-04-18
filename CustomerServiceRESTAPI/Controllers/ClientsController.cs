@@ -81,7 +81,7 @@ namespace CustomerServiceRESTAPI.Controllers
             _clientRepository.Delete(client);
             if (!_clientRepository.Save()) return BadRequest("Could not delete client");
 
-            return NotFound();
+            return NoContent();
         }
     }
 }
