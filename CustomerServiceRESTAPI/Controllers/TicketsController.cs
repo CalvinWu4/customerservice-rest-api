@@ -15,12 +15,14 @@ namespace CustomerServiceRESTAPI.Controllers
         TicketRepository _ticketRepository;
         ClientRepository _clientRepository;
         InventoryService _inventoryService;
+        HRService _hrService;
 
-        public TicketsController(TicketRepository ticketRepository, ClientRepository clientRepository, InventoryService inventoryService)
+        public TicketsController(TicketRepository ticketRepository, ClientRepository clientRepository, InventoryService inventoryService, HRService hrService)
         {
             _ticketRepository = ticketRepository;
             _clientRepository = clientRepository;
             _inventoryService = inventoryService;
+            _hrService = hrService;
         }
 
         // GET: api/tickets
@@ -32,7 +34,7 @@ namespace CustomerServiceRESTAPI.Controllers
             if (clientId != -1) tickets = tickets.Where(t => t.ClientId == clientId);
             if (productSerialNumber != null) tickets = tickets.Where(t => t.ProductSerialNumber == productSerialNumber);
 
-            var result = AutoMapper.Mapper.Map<IEnumerable<TicketWithClientDto>>(tickets);
+            var result = AutoMapper.Mapper.Map<IEnumerable<TicketWithClientAndAgentDto>>(tickets);
 
             return Ok(result);
         }
@@ -44,7 +46,7 @@ namespace CustomerServiceRESTAPI.Controllers
             var ticket = _ticketRepository.Get(id);
             if (ticket == null) return NotFound("Could not find ticket");
 
-            var result = AutoMapper.Mapper.Map<TicketWithClientDto>(ticket);
+            var result = AutoMapper.Mapper.Map<TicketWithClientAndAgentDto>(ticket);
             return Ok(result);
         }
 
@@ -79,7 +81,10 @@ namespace CustomerServiceRESTAPI.Controllers
             _clientRepository.Update(client);
             if (!_clientRepository.Save()) return BadRequest("Could not create ticket");
 
-            var result = AutoMapper.Mapper.Map<TicketWithClientDto>(ticket);
+            // Assign ticket to the agent with the lowest number of assigned tickets
+            ticket.agentId = (await _hrService.GetAgentsAsync()).OrderBy(a => _ticketRepository.GetAllByAgent(a.Id).Count()).First().Id;
+            
+            var result = AutoMapper.Mapper.Map<TicketWithClientAndAgentDto>(ticket);
             return Ok(result);
         }
 
