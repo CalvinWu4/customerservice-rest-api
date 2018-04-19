@@ -30,6 +30,11 @@ namespace CustomerServiceRESTAPI.Services
             return _context.Tickets.Include(t => t.Client).ToList();
         }
 
+        public IEnumerable<Ticket> GetAllByAgent(int agentId)
+        {
+            return _context.Tickets.Include(t => t.agentId == agentId);
+        }
+
         public void Update(Ticket ticket)
         {
             _context.Tickets.Update(ticket);
