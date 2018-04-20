@@ -5,14 +5,24 @@ using System.Linq;
 
 namespace CustomerServiceRESTAPI.Tests.Mocks
 {
-    public class TicketRepositoryMock : IDBRepository<Ticket>
+    public class TicketRepositoryMock : ITicketRepository
     {
-        List<Ticket> _tickets;
-
-        public TicketRepositoryMock()
+        public static Ticket TestTicket = new Ticket()
         {
-            _tickets = new List<Ticket>();
-        }
+            Id = 45,
+            Title = "WOO this phone wont work",
+            Description = "How do I fix?",
+            Status = "new",
+            ProductSerialNumber = InventoryServiceMock.TestProduct.SerialNumber,
+            ClientId = ClientRepositoryMock.TestClient.Id,
+            Client = ClientRepositoryMock.TestClient,
+            AgentId = HRServiceMock.TestAgent.Id
+        };
+
+        List<Ticket> _tickets = new List<Ticket>()
+        {
+            TestTicket
+        };
 
         public void Add(Ticket ticket)
         {
@@ -64,5 +74,9 @@ namespace CustomerServiceRESTAPI.Tests.Mocks
             return _tickets.Where(t => t.ClientId == clientId);
         }
 
+        public IEnumerable<Ticket> GetAllByAgent(int agentId)
+        {
+            return _tickets.Where(t => t.Id == agentId);
+        }
     }
 }
