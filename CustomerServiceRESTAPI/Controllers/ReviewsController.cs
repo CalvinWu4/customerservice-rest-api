@@ -13,10 +13,10 @@ namespace CustomerServiceRESTAPI.Controllers
     [Route("api/[controller]")]
     public class ReviewsController : Controller
     {
-        ReviewRepository _reviewRepository;
-        ClientRepository _clientRepository;
+        IDBRepository<Review> _reviewRepository;
+        IDBRepository<Client> _clientRepository;
 
-        public ReviewsController(ReviewRepository reviewRepository, ClientRepository clientRepository)
+        public ReviewsController(IDBRepository<Review> reviewRepository, IDBRepository<Client> clientRepository)
         {
             _reviewRepository = reviewRepository;
             _clientRepository = clientRepository;

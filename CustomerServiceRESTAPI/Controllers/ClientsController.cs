@@ -14,9 +14,9 @@ namespace CustomerServiceRESTAPI.Controllers
     [Route("api/[controller]")]
     public class ClientsController : Controller
     {
-        ClientRepository _clientRepository;
+        IDBRepository<Client> _clientRepository;
 
-        public ClientsController(ClientRepository clientRepository)
+        public ClientsController(IDBRepository<Client> clientRepository)
         {
             _clientRepository = clientRepository;
         }

@@ -1,7 +1,7 @@
 ﻿using System;
 namespace CustomerServiceRESTAPI.Models
 {
-    public class TicketWithClientDto
+    public class TicketWithClientAndAgentDto
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -10,5 +10,7 @@ namespace CustomerServiceRESTAPI.Models
         public string ProductSerialNumber { get; set; }
 
         public ClientDto Client { get; set; }
+
+        public int AgentId { get; set; }
     }
 }
