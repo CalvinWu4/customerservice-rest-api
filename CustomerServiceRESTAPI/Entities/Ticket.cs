@@ -27,7 +27,7 @@ namespace CustomerServiceRESTAPI.Entities
         public int ClientId { get; set; }
 
         [Required]
-        public int agentId { get; set; }
+        public int AgentId { get; set; }
 
     }
 }

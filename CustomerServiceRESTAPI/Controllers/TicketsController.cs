@@ -77,13 +77,12 @@ namespace CustomerServiceRESTAPI.Controllers
             // Tickets are associated with the product they were created for
             ticket.ProductSerialNumber = productDetails.SerialNumber;
 
+            // Assign ticket to the agent with the lowest number of assigned tickets
+            ticket.AgentId = (await _hrService.GetAgentsAsync()).OrderBy(a => _ticketRepository.GetAllByAgent(a.Id).Count()).First().Id;
+
             client.Tickets.Add(ticket);
             _clientRepository.Update(client);
             if (!_clientRepository.Save()) return BadRequest("Could not create ticket");
-
-            // Assign ticket to the agent with the lowest number of assigned tickets
-            var tempId = (await _hrService.GetAgentsAsync()).OrderBy(a => _ticketRepository.GetAllByAgent(a.Id).Count()).First().Id;
-            //ticket.agentId = (await _hrService.GetAgentsAsync()).OrderBy(a => _ticketRepository.GetAllByAgent(a.Id).Count()).First().Id;
             
             var result = AutoMapper.Mapper.Map<TicketWithClientAndAgentDto>(ticket);
             return Ok(result);

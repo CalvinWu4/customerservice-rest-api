@@ -8,6 +8,6 @@ namespace CustomerServiceRESTAPI.Models
         public string Description { get; set; }
         public string Status { get; set; }
         public string ProductSerialNumber { get; set; }
-        public int agentId { get; set; }
+        public int AgentId { get; set; }
     }
 }

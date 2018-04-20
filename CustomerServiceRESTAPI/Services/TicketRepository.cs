@@ -32,7 +32,7 @@ namespace CustomerServiceRESTAPI.Services
 
         public IEnumerable<Ticket> GetAllByAgent(int agentId)
         {
-            return _context.Tickets.Include(t => t.agentId == agentId).ToList();
+            return _context.Tickets.Where(t => t.AgentId == agentId).ToList();
         }
 
         public void Update(Ticket ticket)

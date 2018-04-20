@@ -11,6 +11,6 @@ namespace CustomerServiceRESTAPI.Models
 
         public ClientDto Client { get; set; }
 
-        public int agentId { get; set; }
+        public int AgentId { get; set; }
     }
 }
