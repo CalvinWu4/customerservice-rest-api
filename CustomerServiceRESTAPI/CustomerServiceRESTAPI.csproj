@@ -32,6 +32,5 @@
     <Compile Remove="Controllers\EmptyClass.cs" />
     <Compile Remove="Models\Client\ClientWithoutTicketsDto.cs" />
     <Compile Remove="Services\IReviewRepository.cs" />
-    <Compile Remove="Services\ITicketRepository.cs" />
   </ItemGroup>
 </Project>

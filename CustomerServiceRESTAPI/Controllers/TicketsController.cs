@@ -13,12 +13,12 @@ namespace CustomerServiceRESTAPI.Controllers
     [Route("api/[controller]")]
     public class TicketsController : Controller
     {
-        IDBRepository<Ticket> _ticketRepository;
+        ITicketRepository _ticketRepository;
         IDBRepository<Client> _clientRepository;
         IInventoryService _inventoryService;
         IHRService _hrService;
 
-        public TicketsController(IDBRepository<Ticket> ticketRepository, IDBRepository<Client> clientRepository, IInventoryService inventoryService, IHRService hrService)
+        public TicketsController(ITicketRepository ticketRepository, IDBRepository<Client> clientRepository, IInventoryService inventoryService, IHRService hrService)
         {
             _ticketRepository = ticketRepository;
             _clientRepository = clientRepository;
