@@ -84,7 +84,7 @@ namespace CustomerServiceRESTAPI.Controllers
             _clientRepository.Update(client);
             if (!_clientRepository.Save()) return BadRequest("Could not create ticket");
             var result = AutoMapper.Mapper.Map<TicketWithClientAndAgentDto>(ticket);
-            return Ok(result);
+            return CreatedAtRoute("GetTicket", new { id = ticket.Id }, result);
         }
 
         // PUT api/tickets/5
