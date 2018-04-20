@@ -1,6 +1,6 @@
 ﻿using System;
 using CustomerServiceRESTAPI.Services;
-using CustomerServiceRESTAPI.Entities
+using CustomerServiceRESTAPI.Entities;
 
 namespace CustomerServiceRESTAPI.Tests.Mocks
 {
