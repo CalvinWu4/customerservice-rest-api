@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CustomerServiceRESTAPI.Services
 {
-    public class TicketRepository : IDBRepository<Ticket>
+    public class TicketRepository : ITicketRepository
     {
         Context _context;
 
