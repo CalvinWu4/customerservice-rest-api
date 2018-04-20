@@ -42,7 +42,7 @@ namespace CustomerServiceRESTAPI.Tests.Controllers
         }
 
         [Fact]
-        public void Get_Client()
+        public void Get_All_Client()
         {
             var controller = new ClientsController(new ClientRepositoryMock());
 
@@ -50,6 +50,17 @@ namespace CustomerServiceRESTAPI.Tests.Controllers
             var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
             var clients = okResult.Value.Should().BeAssignableTo<IEnumerable<ClientWithTicketsAndReviewsDto>>().Subject;
             clients.Count().Should().Be(1);
+        }
+
+        public void Get_Client()
+        {
+            var controller = new ClientsController(new ClientRepositoryMock());
+
+            var result = controller.Get(ClientRepositoryMock.TestClient.Id);
+            var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
+            var client = okResult.Value.Should().BeAssignableTo<ClientWithTicketsAndReviewsDto>().Subject;
+
+            client.Address.City.Should().Be(ClientRepositoryMock.TestClient.AddressCity);
         }
     }
 }
