@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using CustomerServiceRESTAPI.Entities;
 using CustomerServiceRESTAPI.Models;
 
-namespace CustomerServiceAPI.Services
+namespace CustomerServiceRESTAPI.Services
 {
     public interface IHRService
     {
