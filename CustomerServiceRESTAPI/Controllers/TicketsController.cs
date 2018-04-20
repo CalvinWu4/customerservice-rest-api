@@ -40,7 +40,7 @@ namespace CustomerServiceRESTAPI.Controllers
         }
 
         // GET api/tickets/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetTicket")]
         public IActionResult Get(int id)
         {
             var ticket = _ticketRepository.Get(id);
@@ -83,7 +83,6 @@ namespace CustomerServiceRESTAPI.Controllers
             client.Tickets.Add(ticket);
             _clientRepository.Update(client);
             if (!_clientRepository.Save()) return BadRequest("Could not create ticket");
-            
             var result = AutoMapper.Mapper.Map<TicketWithClientAndAgentDto>(ticket);
             return Ok(result);
         }

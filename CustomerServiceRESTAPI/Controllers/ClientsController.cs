@@ -31,7 +31,7 @@ namespace CustomerServiceRESTAPI.Controllers
         }
 
         // GET api/clients/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetClient")]
         public IActionResult Get(int id)
         {
             var client = _clientRepository.Get(id);
@@ -51,7 +51,7 @@ namespace CustomerServiceRESTAPI.Controllers
             if (!_clientRepository.Save()) return BadRequest("Could not create client");
 
             var result = AutoMapper.Mapper.Map<ClientWithTicketsAndReviewsDto>(client);
-            return Ok(result);
+            return CreatedAtRoute("GetClient", new { id = client.Id }, result);
         }
 
         // PUT api/clients/5
