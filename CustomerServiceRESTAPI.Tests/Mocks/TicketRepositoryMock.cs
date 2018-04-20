@@ -14,9 +14,19 @@ namespace CustomerServiceRESTAPI.Tests.Mocks
             _tickets = new List<Ticket>();
         }
 
+        public void Add(Ticket entity)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void AddTicket(Ticket ticket)
         {
             _tickets.Add(ticket);
+        }
+
+        public void Delete(Ticket entity)
+        {
+            throw new System.NotImplementedException();
         }
 
         public void DeleteTicket(Ticket ticket)
@@ -25,6 +35,21 @@ namespace CustomerServiceRESTAPI.Tests.Mocks
             if (ticketId < 0) return;
 
             _tickets.RemoveAt(ticketId);
+        }
+
+        public Ticket Get(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<Ticket> GetAll()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<Ticket> GetAllByAgent(int agentId)
+        {
+            throw new System.NotImplementedException();
         }
 
         public Ticket GetTicket(int ticketId)
@@ -40,6 +65,11 @@ namespace CustomerServiceRESTAPI.Tests.Mocks
         public bool Save()
         {
             return true;
+        }
+
+        public void Update(Ticket entity)
+        {
+            throw new System.NotImplementedException();
         }
 
         public void UpdateTicket(Ticket ticket)

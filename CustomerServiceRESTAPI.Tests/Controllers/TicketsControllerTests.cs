@@ -16,7 +16,7 @@ namespace CustomerServiceRESTAPI.Tests.Controllers
             AutoMapperConfig.Config();
         }
     }
-
+    /*
     [CollectionDefinition("StartupFixture collection")]
     public class StartupCollection : ICollectionFixture<StartupFixture>
     {
@@ -211,4 +211,5 @@ namespace CustomerServiceRESTAPI.Tests.Controllers
 #endregion
 
     }
+    */
 }
