@@ -82,7 +82,8 @@ namespace CustomerServiceRESTAPI.Controllers
             if (!_clientRepository.Save()) return BadRequest("Could not create ticket");
 
             // Assign ticket to the agent with the lowest number of assigned tickets
-            ticket.agentId = (await _hrService.GetAgentsAsync()).OrderBy(a => _ticketRepository.GetAllByAgent(a.Id).Count()).First().Id;
+            var tempId = (await _hrService.GetAgentsAsync()).OrderBy(a => _ticketRepository.GetAllByAgent(a.Id).Count()).First().Id;
+            //ticket.agentId = (await _hrService.GetAgentsAsync()).OrderBy(a => _ticketRepository.GetAllByAgent(a.Id).Count()).First().Id;
             
             var result = AutoMapper.Mapper.Map<TicketWithClientAndAgentDto>(ticket);
             return Ok(result);
