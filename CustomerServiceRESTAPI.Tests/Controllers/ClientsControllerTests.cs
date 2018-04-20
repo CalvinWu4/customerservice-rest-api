@@ -64,5 +64,29 @@ namespace CustomerServiceRESTAPI.Tests.Controllers
 
             client.Address.City.Should().Be(ClientRepositoryMock.TestClient.AddressCity);
         }
+
+        [Fact]
+        public void Update_Client()
+        {
+            var controller = new ClientsController(new ClientRepositoryMock());
+            var clientForUpdate = new ClientForUpdateDto()
+            {
+                FirstName = "Steven",
+                LastName = "Hoe",
+                Email = "cgs@gmail.com"
+            };
+
+            var result = controller.Put(ClientRepositoryMock.TestClient.Id, clientForUpdate);
+            var okResult = result.Should().BeOfType<NoContentResult>().Subject;
+        }
+
+        [Fact]
+        public void Delete_Client()
+        {
+            var controller = new ClientsController(new ClientRepositoryMock());
+
+            var result = controller.Delete(ClientRepositoryMock.TestClient.Id);
+            var OkResult = result.Should().BeOfType<NoContentResult>().Subject;
+        }
     }
 }
