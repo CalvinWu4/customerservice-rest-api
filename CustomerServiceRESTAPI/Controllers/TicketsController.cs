@@ -6,18 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using CustomerServiceRESTAPI.Services;
 using CustomerServiceRESTAPI.Entities;
 using CustomerServiceRESTAPI.Models;
+using CustomerServiceAPI.Services;
 
 namespace CustomerServiceRESTAPI.Controllers
 {
     [Route("api/[controller]")]
     public class TicketsController : Controller
     {
-        TicketRepository _ticketRepository;
-        ClientRepository _clientRepository;
-        InventoryService _inventoryService;
-        HRService _hrService;
+        IDBRepository<Ticket> _ticketRepository;
+        IDBRepository<Client> _clientRepository;
+        IInventoryService _inventoryService;
+        IHRService _hrService;
 
-        public TicketsController(TicketRepository ticketRepository, ClientRepository clientRepository, InventoryService inventoryService, HRService hrService)
+        public TicketsController(IDBRepository<Ticket> ticketRepository, IDBRepository<Client> clientRepository, IInventoryService inventoryService, IHRService hrService)
         {
             _ticketRepository = ticketRepository;
             _clientRepository = clientRepository;
