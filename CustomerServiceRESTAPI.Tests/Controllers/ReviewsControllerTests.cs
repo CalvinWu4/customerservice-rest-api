@@ -70,7 +70,6 @@ namespace CustomerServiceRESTAPI.Tests.Controllers
                 var result = controller.Delete(ClientRepositoryMock.TestClient.Id);
                 Assert.IsType<NoContentResult>(result);
             }
-
         }
     }
-
+}

@@ -14,7 +14,7 @@ namespace CustomerServiceRESTAPI.Tests.Mocks
             SerialNumber = "007",
             Name = "Spy Watch",
             Description = "Can release paralyzing nerve gas to subdue enemy agents",
-            Status = "Super Rad",
+            Status = "sold",
             Warehouse = "Top Secret Lab"
         };
 
