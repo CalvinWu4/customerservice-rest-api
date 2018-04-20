@@ -8,7 +8,20 @@ namespace CustomerServiceRESTAPI.Tests.Mocks
 {
     public class ClientRepositoryMock : IDBRepository<Client>
     {
-        List<Client> _clients = new List<Client>();
+        List<Client> _clients = new List<Client>() {
+            new Client() {
+                Id = 21,
+                FirstName = "John",
+                LastName = "Doe",
+                Email = "johndoe@gmail.com",
+                AddressLine1 = "150 rit",
+                AddressLine2 = "apt 2",
+                AddressCity = "Rochester",
+                AddressState = "ny",
+                AddressZipcode = "02121",
+                AddressCountry = "USA"
+            }
+        };
 
         public void Add(Client client)
         {
