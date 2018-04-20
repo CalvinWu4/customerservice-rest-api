@@ -79,5 +79,14 @@ namespace CustomerServiceRESTAPI.Tests.Controllers
             var result = controller.Put(ClientRepositoryMock.TestClient.Id, clientForUpdate);
             var okResult = result.Should().BeOfType<NoContentResult>().Subject;
         }
+
+        [Fact]
+        public void Delete_Client()
+        {
+            var controller = new ClientsController(new ClientRepositoryMock());
+
+            var result = controller.Delete(ClientRepositoryMock.TestClient.Id);
+            var OkResult = result.Should().BeOfType<NoContentResult>().Subject;
+        }
     }
 }
