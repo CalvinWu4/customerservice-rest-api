@@ -1,21 +1,17 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using Xunit;
 using FluentAssertions;
 using CustomerServiceRESTAPI.Controllers;
 using CustomerServiceRESTAPI.Models;
 using CustomerServiceRESTAPI.Tests.Mocks;
 using Microsoft.AspNetCore.Mvc;
-
 namespace CustomerServiceRESTAPI.Tests.Controllers
 {
+    [Collection("StartupFixture collection")]
     public class ClientsControllerTests
     {
-        public ClientsControllerTests()
-        {
-            AutoMapperConfig.Config();
-        }
-
-        [Fact]
         public void Create_Client()
         {
             var controller = new ClientsController(new ClientRepositoryMock());
@@ -43,6 +39,17 @@ namespace CustomerServiceRESTAPI.Tests.Controllers
             var client = okResult.Value.Should().BeAssignableTo<ClientWithTicketsAndReviewsDto>().Subject;
 
             client.Address.City.Should().Be(clientForCreation.Address.City);
+        }
+
+        [Fact]
+        public void Get_Client()
+        {
+            var controller = new ClientsController(new ClientRepositoryMock());
+
+            var result = controller.Get();
+            var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
+            var clients = okResult.Value.Should().BeAssignableTo<IEnumerable<ClientWithTicketsAndReviewsDto>>().Subject;
+            clients.Count().Should().Be(1);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace CustomerServiceRESTAPI.Tests.Controllers
             AutoMapperConfig.Config();
         }
     }
-    /*
+
     [CollectionDefinition("StartupFixture collection")]
     public class StartupCollection : ICollectionFixture<StartupFixture>
     {
@@ -24,7 +24,7 @@ namespace CustomerServiceRESTAPI.Tests.Controllers
         // to be the place to apply [CollectionDefinition] and all the
         // ICollectionFixture<> interfaces.
     }
-
+    /*
     [Collection("StartupFixture collection")]
     public class EmptyRepoTests
     {
