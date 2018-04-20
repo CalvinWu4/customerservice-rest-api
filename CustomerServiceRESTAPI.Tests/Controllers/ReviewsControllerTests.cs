@@ -2,42 +2,75 @@
 using System.Collections.Generic;
 using System.Text;
 using CustomerServiceRESTAPI.Controllers;
+using CustomerServiceRESTAPI.Models;
 using CustomerServiceRESTAPI.Services;
 using CustomerServiceRESTAPI.Tests.Mocks;
+using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
 namespace CustomerServiceRESTAPI.Tests.Controllers
 {
     class ReviewsControllerTests
     {
-        public class StartupFixture
+        public class SingleReviewRepoTests
         {
-            public StartupFixture()
+
+            [Fact]
+            public void Create_Review()
             {
-                AutoMapperConfig.Config();
+                var controller = new ReviewsController(new ReviewRepositoryMock(), new ClientRepositoryMock());
+
+                var reviewForCreation = new ReviewDtoForCreation()
+                {
+                    AgentId = HRServiceMock.TestAgent.Id,
+                    Content = "This agent sucks!"
+                };
+
+                var result = controller.Post(reviewForCreation, ClientRepositoryMock.TestClient.Id);
+
+                var okResult = result.Should().BeOfType<CreatedAtRouteResult>().Subject;
+                var review = okResult.Value.Should().BeAssignableTo<ReviewDto>().Subject;
+
+                review.Content.Should().Be(reviewForCreation.Content);
+
             }
-        }
-        [CollectionDefinition("StartupFixture collection")]
-        public class StartupCollection : ICollectionFixture<StartupFixture>
-        {
-            // This class has no code, and is never created. Its purpose is simply
-            // to be the place to apply [CollectionDefinition] and all the
-            // ICollectionFixture<> interfaces.
-        }
+//            [Fact]
+//            public void Get_All_Review()
+//            {
+//                var controller = new ReviewsController(new ReviewRepositoryMock(), new ClientRepositoryMock());
+//
+//                var result = controller.Get();
+//                var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
+//                var reviews = okResult.Value.Should().BeAssignableTo<ClientWithTicketsAndReviewsDto>().Subject;
+//
+//                client.Address.City.Should().Be(ClientRepositoryMock.TestClient.AddressCity);
+//            }
 
-        [Collection("StartupFixture collection")]
-        public class EmptyRepoTests
-        {
-            private readonly ReviewsController _emptyRepoController;
-            private StartupFixture _startupFixture;
 
-            public EmptyRepoTests(StartupFixture startupFixture)
+            [Fact]
+            public void Update_Review()
             {
-                _startupFixture = startupFixture;
-                _emptyRepoController = new ReviewsController(new ReviewRepositoryMock(), new ClientRepositoryMock());
+                var controller = new ReviewsController(new ReviewRepositoryMock(), new ClientRepositoryMock());
+
+                var reviewForUpdate = new ReviewDtoForUpdate()
+                {
+                    Content = "Nevermind, this agent is awesome!"
+                };
+
+                var result = controller.Put(ClientRepositoryMock.TestClient.Id, reviewForUpdate);
+
+                Assert.IsType<NoContentResult>(result);
+            }
+
+            public void Delete_Review()
+            {
+                var controller = new ReviewsController(new ReviewRepositoryMock(), new ClientRepositoryMock());
+
+                var result = controller.Delete(ClientRepositoryMock.TestClient.Id);
+                Assert.IsType<NoContentResult>(result);
             }
 
         }
-
-
     }
+
