@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace CustomerServiceRESTAPI.Tests.Mocks
 {
-    public class TicketRepositoryMock : ITicketRepository
+    public class TicketRepositoryMock : IDBRepository<Ticket>
     {
         List<Ticket> _tickets;
 
@@ -14,22 +14,12 @@ namespace CustomerServiceRESTAPI.Tests.Mocks
             _tickets = new List<Ticket>();
         }
 
-        public void Add(Ticket entity)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void AddTicket(Ticket ticket)
+        public void Add(Ticket ticket)
         {
             _tickets.Add(ticket);
         }
 
-        public void Delete(Ticket entity)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void DeleteTicket(Ticket ticket)
+        public void Delete(Ticket ticket)
         {
             var ticketId = GetTicketIndex(ticket.Id);
             if (ticketId < 0) return;
@@ -37,27 +27,12 @@ namespace CustomerServiceRESTAPI.Tests.Mocks
             _tickets.RemoveAt(ticketId);
         }
 
-        public Ticket Get(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IEnumerable<Ticket> GetAll()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IEnumerable<Ticket> GetAllByAgent(int agentId)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Ticket GetTicket(int ticketId)
+        public Ticket Get(int ticketId)
         {
             return _tickets.FirstOrDefault<Ticket>(t => t.Id == ticketId);
         }
 
-        public IEnumerable<Ticket> GetTickets()
+        public IEnumerable<Ticket> GetAll()
         {
             return _tickets;
         }
@@ -67,12 +42,7 @@ namespace CustomerServiceRESTAPI.Tests.Mocks
             return true;
         }
 
-        public void Update(Ticket entity)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void UpdateTicket(Ticket ticket)
+        public void Update(Ticket ticket)
         {
             var ticketId = GetTicketIndex(ticket.Id);
             if (ticketId < 0) return;
@@ -84,5 +54,15 @@ namespace CustomerServiceRESTAPI.Tests.Mocks
         {
             return _tickets.FindIndex(t => t.Id == ticketId);
         }
+
+        public IEnumerable<Ticket> GetAllByAgentId(int agentId)
+        {
+            return _tickets.Where(t => t.AgentId == agentId);
+        }
+        public IEnumerable<Ticket> GetAllByClientId(int clientId)
+        {
+            return _tickets.Where(t => t.ClientId == clientId);
+        }
+
     }
 }
