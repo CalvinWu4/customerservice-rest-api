@@ -44,5 +44,11 @@ namespace CustomerServiceRESTAPI.Tests.Mocks
                 _reviews[index] = entity;
             }
         }
+
+        public IEnumerable<Review> GetAllByAgentId(int agentId)
+        {
+            return _reviews.Where(r => r.AgentId == agentId);
+        }
+
     }
 }
