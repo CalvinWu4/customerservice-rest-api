@@ -14,8 +14,12 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="Mocks\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="UnitTest1.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CustomerServiceRESTAPI\CustomerServiceRESTAPI.csproj" />
   </ItemGroup>
 </Project>
