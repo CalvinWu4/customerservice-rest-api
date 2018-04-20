@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using CustomerServiceRESTAPI.Services;
 using CustomerServiceRESTAPI.Entities;
 using CustomerServiceRESTAPI.Models;
-using CustomerServiceAPI.Services;
 
 namespace CustomerServiceRESTAPI.Controllers
 {
