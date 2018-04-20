@@ -12,6 +12,7 @@ namespace CustomerServiceRESTAPI.Tests.Controllers
     [Collection("StartupFixture collection")]
     public class ClientsControllerTests
     {
+        [Fact]
         public void Create_Client()
         {
             var controller = new ClientsController(new ClientRepositoryMock());
@@ -52,6 +53,7 @@ namespace CustomerServiceRESTAPI.Tests.Controllers
             clients.Count().Should().Be(1);
         }
 
+        [Fact]
         public void Get_Client()
         {
             var controller = new ClientsController(new ClientRepositoryMock());
