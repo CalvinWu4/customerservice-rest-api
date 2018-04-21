@@ -12,7 +12,7 @@ using Xunit;
 
 namespace CustomerServiceRESTAPI.Tests.Controllers
 {
-    [CollectionDefinition("StartupFixture collection")]
+    [Collection("StartupFixture collection")]
     public class ReviewsControllerTests
     {
 
@@ -30,7 +30,7 @@ namespace CustomerServiceRESTAPI.Tests.Controllers
             var result = controller.Post(reviewForCreation, ClientRepositoryMock.TestClient.Id);
 
             var okResult = result.Should().BeOfType<CreatedAtRouteResult>().Subject;
-            var review = okResult.Value.Should().BeAssignableTo<ReviewDto>().Subject;
+            var review = okResult.Value.Should().BeAssignableTo<ReviewWithClientDto>().Subject;
 
             review.Content.Should().Be(reviewForCreation.Content);
 
@@ -42,7 +42,7 @@ namespace CustomerServiceRESTAPI.Tests.Controllers
         
             var result = controller.Get();
             var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
-            var reviews = okResult.Value.Should().BeAssignableTo<IEnumerable<ReviewDto>>().Subject;
+            var reviews = okResult.Value.Should().BeAssignableTo<IEnumerable<ReviewWithClientDto>>().Subject;
             reviews.Count().Should().Be(1);
         }
 
@@ -53,7 +53,7 @@ namespace CustomerServiceRESTAPI.Tests.Controllers
 
             var result = controller.Get(ReviewRepositoryMock.TestReview.Id);
             var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
-            var review = okResult.Value.Should().BeAssignableTo<ReviewDto>().Subject;
+            var review = okResult.Value.Should().BeAssignableTo<ReviewWithClientDto>().Subject;
 
             review.Content.Should().Be(ReviewRepositoryMock.TestReview.Content);
         }
@@ -69,9 +69,8 @@ namespace CustomerServiceRESTAPI.Tests.Controllers
                 Content = "Nevermind, this agent is awesome!"
             };
 
-            var result = controller.Put(ClientRepositoryMock.TestClient.Id, reviewForUpdate);
-
-            Assert.IsType<NoContentResult>(result);
+            var result = controller.Put(ReviewRepositoryMock.TestReview.Id, reviewForUpdate);
+            var okResult = result.Should().BeOfType<NoContentResult>().Subject;
         }
 
         [Fact]
