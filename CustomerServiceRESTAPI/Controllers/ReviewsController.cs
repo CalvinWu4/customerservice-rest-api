@@ -16,7 +16,7 @@ namespace CustomerServiceRESTAPI.Controllers
         IDBRepository<Review> _reviewRepository;
         IDBRepository<Client> _clientRepository;
 
-        public ReviewsController(IDBRepository<Review> reviewRepository, IDBRepository<Client> clientRepository)
+        public ReviewsController(ReviewRepository reviewRepository, ClientRepository clientRepository)
         {
             _reviewRepository = reviewRepository;
             _clientRepository = clientRepository;

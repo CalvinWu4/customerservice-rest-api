@@ -16,7 +16,7 @@ namespace CustomerServiceRESTAPI.Controllers
     {
         IDBRepository<Client> _clientRepository;
 
-        public ClientsController(IDBRepository<Client> clientRepository)
+        public ClientsController(ClientRepository clientRepository)
         {
             _clientRepository = clientRepository;
         }

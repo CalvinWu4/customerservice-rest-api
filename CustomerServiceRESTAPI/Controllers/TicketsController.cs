@@ -18,7 +18,7 @@ namespace CustomerServiceRESTAPI.Controllers
         IInventoryService _inventoryService;
         IHRService _hrService;
 
-        public TicketsController(ITicketRepository ticketRepository, IDBRepository<Client> clientRepository, IInventoryService inventoryService, IHRService hrService)
+        public TicketsController(TicketRepository ticketRepository, ClientRepository clientRepository, InventoryService inventoryService, HRService hrService)
         {
             _ticketRepository = ticketRepository;
             _clientRepository = clientRepository;
