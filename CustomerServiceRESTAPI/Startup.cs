@@ -34,9 +34,9 @@ namespace CustomerServiceRESTAPI
             services.AddScoped<IDBRepository<Client>, ClientRepository>();
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<IDBRepository<Review>, ReviewRepository>();
-
             services.AddScoped<IHRService, HRService>();
             services.AddScoped<IInventoryService, InventoryService>();
+            services.AddScoped<IDBRepository<Comment>, CommentRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

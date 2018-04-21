@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using CustomerServiceRESTAPI.Entities;
 using CustomerServiceRESTAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CustomerServiceRESTAPI
 {
@@ -24,6 +27,11 @@ namespace CustomerServiceRESTAPI
                 cfg.CreateMap<Entities.Review, Models.ReviewDto>();
                 cfg.CreateMap<Entities.Review, Models.ReviewWithClientDto>();
                 cfg.CreateMap<Models.ReviewDtoForCreation, Entities.Review>();
+
+
+                cfg.CreateMap<Entities.Comment, Models.CommentDto>();
+                cfg.CreateMap<Entities.Comment, Models.CommentWithTicketsDto>();
+                cfg.CreateMap<Models.CommentForCreationDto, Entities.Comment>();
             });
         }
 
