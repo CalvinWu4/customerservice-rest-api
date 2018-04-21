@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using CustomerServiceRESTAPI.Services;
 using CustomerServiceRESTAPI.Entities;
 using CustomerServiceRESTAPI.Models;
+using Newtonsoft.Json;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace CustomerServiceRESTAPI.Controllers
 {
@@ -52,8 +54,19 @@ namespace CustomerServiceRESTAPI.Controllers
 
         // POST api/tickets
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]TicketForCreationDto ticketForCreation, [FromQuery(Name = "clientId")]int clientId)
+        public async Task<IActionResult> Post([FromBody]TicketForCreationDto ticketForCreation, [FromHeader(Name = "token")]string token = null)
         {
+            if (token == null) return NotFound("token not found");
+            var jwtDecoded = new JwtPayload();
+            try 
+            {
+                jwtDecoded = TokenParser.Parse(token);   
+            } catch (Exception)
+            {
+                return BadRequest("Bad token");
+            }
+            var clientId = Convert.ToInt32(jwtDecoded["id"]);
+
             var ticket = AutoMapper.Mapper.Map<Ticket>(ticketForCreation);
             // Look up the client by id
             var client = _clientRepository.Get(clientId);
