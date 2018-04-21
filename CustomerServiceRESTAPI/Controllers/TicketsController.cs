@@ -57,16 +57,10 @@ namespace CustomerServiceRESTAPI.Controllers
         public async Task<IActionResult> Post([FromBody]TicketForCreationDto ticketForCreation, [FromHeader(Name = "token")]string token = null)
         {
             if (token == null) return NotFound("token not found");
-            var jwtDecoded = new JwtPayload();
-            try 
-            {
-                jwtDecoded = TokenParser.Parse(token);   
-            } catch (Exception)
-            {
-                return BadRequest("Bad token");
-            }
-            var clientId = Convert.ToInt32(jwtDecoded["id"]);
 
+            var clientId = TokenParser.GetClientIdFromToken(token);
+            if (clientId == -1) return BadRequest("Bad token");
+                
             var ticket = AutoMapper.Mapper.Map<Ticket>(ticketForCreation);
             // Look up the client by id
             var client = _clientRepository.Get(clientId);

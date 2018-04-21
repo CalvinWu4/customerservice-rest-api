@@ -7,6 +7,7 @@ using AutoMapper;
 using CustomerServiceRESTAPI.Models;
 using CustomerServiceRESTAPI.Entities;
 using CustomerServiceRESTAPI.Services;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace CustomerServiceRESTAPI.Controllers
 {
@@ -49,9 +50,13 @@ namespace CustomerServiceRESTAPI.Controllers
 
         // Get api/reviews
         [HttpPost]
-        public IActionResult Post([FromBody]ReviewDtoForCreation review, [FromQuery(Name = "clientId")]int clientId)
+        public IActionResult Post([FromBody]ReviewDtoForCreation review, [FromHeader(Name = "token")]string token = null)
         {
-            if (review == null) return BadRequest();
+            if (review == null) return BadRequest("Review is required");
+            if (token == null) return NotFound("token not found");
+
+            var clientId = TokenParser.GetClientIdFromToken(token);
+            if (clientId == -1) return BadRequest("Bad token");
 
             var finalReview = Mapper.Map<Review>(review);
             var client = _clientRepository.Get(clientId);
