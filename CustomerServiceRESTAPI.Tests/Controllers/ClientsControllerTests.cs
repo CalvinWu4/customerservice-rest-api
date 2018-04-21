@@ -7,6 +7,8 @@ using CustomerServiceRESTAPI.Controllers;
 using CustomerServiceRESTAPI.Models;
 using CustomerServiceRESTAPI.Tests.Mocks;
 using Microsoft.AspNetCore.Mvc;
+using CustomerServiceRESTAPI.Services;
+
 namespace CustomerServiceRESTAPI.Tests.Controllers
 {
     [Collection("StartupFixture collection")]
