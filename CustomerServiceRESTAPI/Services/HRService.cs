@@ -33,10 +33,32 @@ namespace CustomerServiceRESTAPI.Services
             return JsonConvert.DeserializeObject<AgentDto>(await result.Content.ReadAsStringAsync());
         }
 
+        public async Task<AuthHRDto> PostClientAsync(ClientForCreationDto clientForCreation)
+        {
+            var crendentials = new HRCustomerCrendential()
+            {
+                username = clientForCreation.Email,
+                password = clientForCreation.Password
+            };
+
+            var result = await client.PostAsync("http://kennuware-1772705765.us-east-1.elb.amazonaws.com/auth/create", new StringContent(JsonConvert.SerializeObject(crendentials)));
+            if (!result.IsSuccessStatusCode) return null;
+
+            var parsedResponse = JsonConvert.DeserializeObject<AuthHRDto>(await result.Content.ReadAsStringAsync());
+
+            return parsedResponse;
+        }
     }
 
     class AgentListResponse
     {
         public IEnumerable<AgentDto> Data { get; set; }
+    }
+
+    class HRCustomerCrendential
+    {
+        public string username { get; set; }
+        public string password { get; set; }
+        public string type { get; set; } = "customer";
     }
 }
