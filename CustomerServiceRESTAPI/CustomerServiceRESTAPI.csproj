@@ -14,6 +14,7 @@
     <Folder Include="Models\Reviews\" />
     <Folder Include="Models\Agent\" />
     <Folder Include="Models\Product\" />
+    <Folder Include="Models\Comments\" />
   </ItemGroup>
 
   <ItemGroup>
