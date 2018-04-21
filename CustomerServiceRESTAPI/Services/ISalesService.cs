@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CustomerServiceRESTAPI.Entities;
-using CustomerServiceRESTAPI.Models;
 
 namespace CustomerServiceRESTAPI.Services
 {
-    public interface IHRService
+    public interface ISalesService
     {
-        Task<IEnumerable<AgentDto>> GetAgentsAsync();
-        Task<AgentDto> GetAgentAsync(int id);
+        Task<bool> RequestReplacementDevice(Ticket ticketForRefund);
     }
 }

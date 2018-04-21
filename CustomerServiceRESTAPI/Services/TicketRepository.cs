@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CustomerServiceRESTAPI.Services
 {
-    public class TicketRepository : IDBRepository<Ticket>
+    public class TicketRepository : ITicketRepository
     {
         Context _context;
 
@@ -28,6 +28,11 @@ namespace CustomerServiceRESTAPI.Services
         public IEnumerable<Ticket> GetAll()
         {
             return _context.Tickets.Include(t => t.Client).ToList();
+        }
+
+        public IEnumerable<Ticket> GetAllByAgent(int agentId)
+        {
+            return _context.Tickets.Where(t => t.AgentId == agentId).ToList();
         }
 
         public void Update(Ticket ticket)

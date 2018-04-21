@@ -20,7 +20,7 @@ namespace CustomerServiceRESTAPI
                 cfg.CreateMap<Models.ClientForCreationDto, Entities.Client>();
 
                 cfg.CreateMap<Entities.Ticket, Models.TicketDto>();
-                cfg.CreateMap<Entities.Ticket, Models.TicketWithClientDto>();
+                cfg.CreateMap<Entities.Ticket, Models.TicketWithClientAndAgentDto>();
                 cfg.CreateMap<Models.TicketForCreationDto, Entities.Ticket>();
 
 

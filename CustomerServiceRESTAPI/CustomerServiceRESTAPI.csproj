@@ -7,7 +7,6 @@
   <ItemGroup>
     <Folder Include="wwwroot\" />
     <Folder Include="Entities\" />
-    <Folder Include="Services\" />
     <Folder Include="Models\" />
     <Folder Include="Models\Client\" />
     <Folder Include="Models\Ticket\" />
@@ -33,6 +32,6 @@
     <Compile Remove="Services\IClientRepository.cs" />
     <Compile Remove="Controllers\EmptyClass.cs" />
     <Compile Remove="Models\Client\ClientWithoutTicketsDto.cs" />
-    <Compile Remove="Services\ITicketRepository.cs" />
+    <Compile Remove="Services\IReviewRepository.cs" />
   </ItemGroup>
 </Project>

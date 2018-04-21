@@ -40,19 +40,14 @@ namespace CustomerServiceRESTAPI.Controllers
             return Ok(result);
         }
 
-
         [HttpPost]
-        public IActionResult Post([FromBody]CommentForCreationDto commentForCreation, [FromQuery]int clientId = -1, [FromQuery]int agentId = -1)
+        public IActionResult Post([FromBody]CommentForCreationDto commentForCreation, [FromQuery]int agentId = -1, [FromQuery]int clientId = -1)
         {
-            var comment = AutoMapper.Mapper.Map<Comment>(commentForCreation);
             if (clientId == -1 && agentId == -1) return BadRequest("ClientId or AgentId is required");
 
-            if (clientId != -1)
-            {
-                comment.ClientId = clientId;
-            } else {
-                comment.AgentId = agentId;
-            }
+            var comment = AutoMapper.Mapper.Map<Comment>(commentForCreation);
+            comment.ClientId = clientId != -1 ? clientId : agentId;
+            comment.DateCreated = DateTime.Now.ToString();
 
             _commentRepository.Add(comment);
             if (!_commentRepository.Save()) return BadRequest("Could not create comment");
@@ -61,7 +56,30 @@ namespace CustomerServiceRESTAPI.Controllers
             return Ok(result);
         }
 
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody]CommentForUpdateDto commentForUpdate)
+        {
+            var comment = _commentRepository.Get(id);
+            if (comment == null) return NotFound("Comment not found");
 
+            comment.Content = commentForUpdate.content != null ? commentForUpdate.content : comment.Content;
+
+            _commentRepository.Update(comment);
+            if (!_commentRepository.Save()) return BadRequest("Could not update comment");
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var comment = _commentRepository.Get(id);
+            if (comment == null) return NotFound("Comment not found");
+
+            _commentRepository.Delete(comment);
+            if (!_commentRepository.Save()) return BadRequest("Could not delete client");
+
+            return NoContent();
+        }
     }
-
 }

@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Runtime.Serialization.Json;
 using System.Collections.Generic;
 using System.Linq;
-using CustomerServiceAPI.Services;
+using CustomerServiceRESTAPI.Services;
 using CustomerServiceRESTAPI.Entities;
 using CustomerServiceRESTAPI.Models;
 using System.Threading.Tasks;
