@@ -31,12 +31,12 @@ namespace CustomerServiceRESTAPI
             services.AddMvc();
             services.AddDbContext<Context>(o => o.UseMySql(URL_CONNECTION_STRING));
 
-            services.AddScoped<ClientRepository>();
-            services.AddScoped<TicketRepository>();
-            services.AddScoped<ReviewRepository>();
+            services.AddScoped<IDBRepository<Client>, ClientRepository>();
+            services.AddScoped<ITicketRepository, TicketRepository>();
+            services.AddScoped<IDBRepository<Review>, ReviewRepository>();
 
-            services.AddScoped<HRService>();
-            services.AddScoped<InventoryService>();
+            services.AddScoped<IHRService, HRService>();
+            services.AddScoped<IInventoryService, InventoryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
