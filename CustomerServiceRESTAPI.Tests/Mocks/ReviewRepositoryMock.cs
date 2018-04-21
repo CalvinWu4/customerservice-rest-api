@@ -9,7 +9,20 @@ namespace CustomerServiceRESTAPI.Tests.Mocks
 {
     class ReviewRepositoryMock : IDBRepository<Review>
     {
-        List<Review> _reviews = new List<Review>();
+        public static Review TestReview = new Review()
+        {
+            Id = 98,
+            AgentId = HRServiceMock.TestAgent.Id,
+            Content = "test review content",
+            DateCreated = DateTime.Now.ToString(),
+            Client = ClientRepositoryMock.TestClient,
+            ClientId = ClientRepositoryMock.TestClient.Id
+        };
+
+        private List<Review> _reviews = new List<Review>()
+        {
+            TestReview
+        };
 
         public void Add(Review entity)
         {

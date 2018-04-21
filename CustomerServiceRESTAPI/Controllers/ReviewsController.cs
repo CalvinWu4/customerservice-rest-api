@@ -38,7 +38,7 @@ namespace CustomerServiceRESTAPI.Controllers
 
         // GET: api/reviews/1
         [HttpGet("{id}", Name = "GetReview")]
-        public IActionResult GetAll(int id)
+        public IActionResult Get(int id)
         {
             var review = _reviewRepository.Get(id);
             if (review == null) return NotFound();

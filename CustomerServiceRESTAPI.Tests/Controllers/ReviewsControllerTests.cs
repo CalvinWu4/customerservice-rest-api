@@ -1,42 +1,86 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using CustomerServiceRESTAPI.Controllers;
+using CustomerServiceRESTAPI.Models;
 using CustomerServiceRESTAPI.Services;
 using CustomerServiceRESTAPI.Tests.Mocks;
+using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
 namespace CustomerServiceRESTAPI.Tests.Controllers
 {
-    class ReviewsControllerTests
+    [Collection("StartupFixture collection")]
+    public class ReviewsControllerTests
     {
-        public class StartupFixture
+
+        [Fact]
+        public void Create_Review()
         {
-            public StartupFixture()
+            var controller = new ReviewsController(new ReviewRepositoryMock(), new ClientRepositoryMock());
+
+            var reviewForCreation = new ReviewDtoForCreation()
             {
-                AutoMapperConfig.Config();
-            }
+                AgentId = HRServiceMock.TestAgent.Id,
+                Content = "This agent sucks!"
+            };
+
+            var result = controller.Post(reviewForCreation, ClientRepositoryMock.TestClient.Id);
+
+            var okResult = result.Should().BeOfType<CreatedAtRouteResult>().Subject;
+            var review = okResult.Value.Should().BeAssignableTo<ReviewWithClientDto>().Subject;
+
+            review.Content.Should().Be(reviewForCreation.Content);
+
         }
-        [CollectionDefinition("StartupFixture collection")]
-        public class StartupCollection : ICollectionFixture<StartupFixture>
+        [Fact]
+        public void Get_All_Review()
         {
-            // This class has no code, and is never created. Its purpose is simply
-            // to be the place to apply [CollectionDefinition] and all the
-            // ICollectionFixture<> interfaces.
+            var controller = new ReviewsController(new ReviewRepositoryMock(), new ClientRepositoryMock());
+        
+            var result = controller.Get();
+            var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
+            var reviews = okResult.Value.Should().BeAssignableTo<IEnumerable<ReviewWithClientDto>>().Subject;
+            reviews.Count().Should().Be(1);
         }
 
-        [Collection("StartupFixture collection")]
-        public class EmptyRepoTests
+        [Fact]
+        public void Get_Review()
         {
-            private readonly ReviewsController _emptyRepoController;
-            private StartupFixture _startupFixture;
+            var controller = new ReviewsController(new ReviewRepositoryMock(), new ClientRepositoryMock());
 
-            public EmptyRepoTests(StartupFixture startupFixture)
+            var result = controller.Get(ReviewRepositoryMock.TestReview.Id);
+            var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
+            var review = okResult.Value.Should().BeAssignableTo<ReviewWithClientDto>().Subject;
+
+            review.Content.Should().Be(ReviewRepositoryMock.TestReview.Content);
+        }
+
+
+        [Fact]
+        public void Update_Review()
+        {
+            var controller = new ReviewsController(new ReviewRepositoryMock(), new ClientRepositoryMock());
+
+            var reviewForUpdate = new ReviewDtoForUpdate()
             {
-                _startupFixture = startupFixture;
-                _emptyRepoController = new ReviewsController(new ReviewRepositoryMock(), new ClientRepositoryMock());
-            }
+                Content = "Nevermind, this agent is awesome!"
+            };
 
+            var result = controller.Put(ReviewRepositoryMock.TestReview.Id, reviewForUpdate);
+            var okResult = result.Should().BeOfType<NoContentResult>().Subject;
+        }
+
+        [Fact]
+        public void Delete_Review()
+        {
+            var controller = new ReviewsController(new ReviewRepositoryMock(), new ClientRepositoryMock());
+
+            var result = controller.Delete(ClientRepositoryMock.TestClient.Id);
+            Assert.IsType<NoContentResult>(result);
         }
     }
+
 }
