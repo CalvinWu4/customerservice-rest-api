@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 namespace CustomerServiceRESTAPI.Models
 {
     public class TicketWithClientAndAgentDto
@@ -12,5 +13,7 @@ namespace CustomerServiceRESTAPI.Models
         public ClientDto Client { get; set; }
 
         public int AgentId { get; set; }
+
+        public ICollection<CommentDto> Comments { get; set; } = new List<CommentDto>();
     }
 }
