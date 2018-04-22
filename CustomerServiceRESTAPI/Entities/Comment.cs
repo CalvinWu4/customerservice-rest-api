@@ -20,8 +20,6 @@ namespace CustomerServiceRESTAPI.Entities
         public Ticket Ticket{ get; set; } 
         public int TicketId { get;  set;}
 
-        [ForeignKey("ClientId")]
-        public Client client { get; set; }
         public int ClientId { get; set; }
 
         public int AgentId { get; set; }

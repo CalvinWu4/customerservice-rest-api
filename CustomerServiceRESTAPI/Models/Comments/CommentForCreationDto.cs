@@ -6,6 +6,7 @@ namespace CustomerServiceRESTAPI.Models
         public int Id { get; set; }
         public int TicketId { get; set; }
         public string Content { get; set; }
-        public string CommentedBy { get; set; }
+        public int AgentId { get; set; }
+        public int ClientId { get; set; }
     }
 }

@@ -271,6 +271,6 @@ __pycache__/
 
 obj/
 
-appsettings.Development.json
+CustomerServiceRESTAPI/appsettings.Development.json
 
 .DS_Store
