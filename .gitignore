@@ -274,3 +274,5 @@ obj/
 CustomerServiceRESTAPI/appsettings.Development.json
 
 .DS_Store
+
+CustomerServiceRESTAPI.sln

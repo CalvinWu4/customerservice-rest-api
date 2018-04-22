@@ -16,7 +16,6 @@ namespace CustomerServiceRESTAPI.Entities
         [Required]
         public string Content { get; set; }
 
-        [Required]
         public string DateCreated { get; set; }
 
         [ForeignKey("ClientId")]

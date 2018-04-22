@@ -10,8 +10,6 @@ namespace CustomerServiceRESTAPI.Models
         public string Content { get; set; }
         public int ClientId { get; set; }
         public int AgentId { get; set; }
-        public string DateCreated { get; set; }
-
-        public ICollection<TicketDto> Tickets { get; set; } = new List<TicketDto>();
+        //public string DateCreated { get; set; }
     }
 }

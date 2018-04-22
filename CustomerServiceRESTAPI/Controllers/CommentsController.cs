@@ -53,7 +53,7 @@ namespace CustomerServiceRESTAPI.Controllers
             {
                 comment.AgentId = agentId;
             }
-            comment.DateCreated = DateTime.Now.ToString();
+            //comment.DateCreated = DateTime.Now.ToString();
 
             _commentRepository.Add(comment);
             if (!_commentRepository.Save()) return BadRequest("Could not create comment");
