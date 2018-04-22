@@ -46,13 +46,8 @@ namespace CustomerServiceRESTAPI.Controllers
             if (clientId == -1 && agentId == -1) return BadRequest("ClientId or AgentId is required");
 
             var comment = AutoMapper.Mapper.Map<Comment>(commentForCreation);
-            if (clientId != -1)
-            {
-                comment.ClientId = clientId;
-            } else
-            {
-                comment.AgentId = agentId;
-            }
+            comment.ClientId = clientId;
+            comment.AgentId = agentId;
             //comment.DateCreated = DateTime.Now.ToString();
 
             _commentRepository.Add(comment);
