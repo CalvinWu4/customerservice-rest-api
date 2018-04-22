@@ -21,13 +21,13 @@ namespace CustomerServiceRESTAPI.Tests.Controllers
 
             var commentForCreationAgent = new CommentForCreationDto()
             {
-                AgentId = HRServiceMock.TestAgent.Id,
-                Content = "There is an issue with this item!"
+                Content = "There is an issue with this item!",
+                TicketId = TicketRepositoryMock.TestTicket.Id
+
             };
 
             var commentForCreationClient = new CommentForCreationDto()
             {
-                ClientId = ClientRepositoryMock.TestClient.Id,
                 Content = "There is an issue with this item!",
                 TicketId = TicketRepositoryMock.TestTicket.Id
             };
