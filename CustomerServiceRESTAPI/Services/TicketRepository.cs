@@ -22,12 +22,12 @@ namespace CustomerServiceRESTAPI.Services
 
         public Ticket Get(int id)
         {
-            return _context.Tickets.Include(t => t.Client).FirstOrDefault(t => t.Id == id);
+            return GetAll().FirstOrDefault(t => t.Id == id);
         }
 
         public IEnumerable<Ticket> GetAll()
         {
-            return _context.Tickets.Include(t => t.Client).ToList();
+            return _context.Tickets.Include(t => t.Client).Include(t => t.Comments).ToList();
         }
 
         public IEnumerable<Ticket> GetAllByAgent(int agentId)

@@ -6,10 +6,10 @@ namespace CustomerServiceRESTAPI.Models
     public class CommentDto
     {
         public int Id { get; set; }
-        public int ticketId{ get; set; }
-        public string content { get; set; }
-        public string author { get; set; }
-        public string commentedBy { get; set; }
-        public string dateCreated { get; set; }
+        public int TicketId{ get; set; }
+        public string Content { get; set; }
+        public int ClientId { get; set; }
+        public int AgentId { get; set; }
+        public string DateCreated { get; set; }
     }
 }

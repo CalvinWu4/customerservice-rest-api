@@ -30,7 +30,7 @@ namespace CustomerServiceRESTAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name="GetComment")]
         public IActionResult Get(int id)
         {
             var comment = _commentRepository.Get(id);
@@ -46,14 +46,20 @@ namespace CustomerServiceRESTAPI.Controllers
             if (clientId == -1 && agentId == -1) return BadRequest("ClientId or AgentId is required");
 
             var comment = AutoMapper.Mapper.Map<Comment>(commentForCreation);
-            comment.ClientId = clientId != -1 ? clientId : agentId;
+            if (clientId != -1)
+            {
+                comment.ClientId = clientId;
+            } else
+            {
+                comment.AgentId = agentId;
+            }
             comment.DateCreated = DateTime.Now.ToString();
 
             _commentRepository.Add(comment);
             if (!_commentRepository.Save()) return BadRequest("Could not create comment");
 
             var result = AutoMapper.Mapper.Map<CommentWithTicketsDto>(comment);
-            return Ok(result);
+            return CreatedAtRoute("GetComment", new { id = comment.Id }, result);
         }
 
         [HttpPut("{id}")]
