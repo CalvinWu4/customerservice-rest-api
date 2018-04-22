@@ -11,7 +11,5 @@ namespace CustomerServiceRESTAPI.Models
         public int ClientId { get; set; }
         public int AgentId { get; set; }
         public string DateCreated { get; set; }
-
-        public ICollection<TicketDto> Tickets { get; set; } = new List<TicketDto>();
     }
 }
