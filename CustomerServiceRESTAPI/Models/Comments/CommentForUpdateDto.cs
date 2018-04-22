@@ -3,6 +3,6 @@ namespace CustomerServiceRESTAPI.Models
 {
     public class CommentForUpdateDto
     {
-        public string content { get; set; }
+        public string Content { get; set; }
     }
 }

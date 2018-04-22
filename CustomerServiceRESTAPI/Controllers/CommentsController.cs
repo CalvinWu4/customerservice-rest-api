@@ -68,7 +68,7 @@ namespace CustomerServiceRESTAPI.Controllers
             var comment = _commentRepository.Get(id);
             if (comment == null) return NotFound("Comment not found");
 
-            comment.Content = commentForUpdate.content != null ? commentForUpdate.content : comment.Content;
+            comment.Content = commentForUpdate.Content != null ? commentForUpdate.Content : comment.Content;
 
             _commentRepository.Update(comment);
             if (!_commentRepository.Save()) return BadRequest("Could not update comment");
