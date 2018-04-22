@@ -46,13 +46,8 @@ namespace CustomerServiceRESTAPI.Controllers
             if (clientId == -1 && agentId == -1) return BadRequest("ClientId or AgentId is required");
 
             var comment = AutoMapper.Mapper.Map<Comment>(commentForCreation);
-            if (clientId != -1)
-            {
-                comment.ClientId = clientId;
-            } else
-            {
-                comment.AgentId = agentId;
-            }
+            comment.ClientId = clientId;
+            comment.AgentId = agentId;
             //comment.DateCreated = DateTime.Now.ToString();
 
             _commentRepository.Add(comment);
@@ -68,7 +63,7 @@ namespace CustomerServiceRESTAPI.Controllers
             var comment = _commentRepository.Get(id);
             if (comment == null) return NotFound("Comment not found");
 
-            comment.Content = commentForUpdate.content != null ? commentForUpdate.content : comment.Content;
+            comment.Content = commentForUpdate.Content != null ? commentForUpdate.Content : comment.Content;
 
             _commentRepository.Update(comment);
             if (!_commentRepository.Save()) return BadRequest("Could not update comment");
