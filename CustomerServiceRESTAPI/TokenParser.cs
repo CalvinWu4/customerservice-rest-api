@@ -18,15 +18,17 @@ namespace CustomerServiceRESTAPI
             try
             {
                 var jwt = Parse(token);
+                var accountType = Convert.ToString(jwt["accountType"]);
+                if (accountType == "employee") return -1;
+
                 var clientId = Convert.ToInt32(jwt["id"]);
                 return clientId;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return -1;
             }
         }
-    }
     }
 
     public class Token

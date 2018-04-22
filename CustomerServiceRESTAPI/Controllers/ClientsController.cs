@@ -15,10 +15,12 @@ namespace CustomerServiceRESTAPI.Controllers
     public class ClientsController : Controller
     {
         IDBRepository<Client> _clientRepository;
+        IHRService _hrService;
 
-        public ClientsController(IDBRepository<Client> clientRepository)
+        public ClientsController(IDBRepository<Client> clientRepository, IHRService hrService)
         {
             _clientRepository = clientRepository;
+            _hrService = hrService;
         }
 
         [HttpGet]
@@ -43,14 +45,22 @@ namespace CustomerServiceRESTAPI.Controllers
 
         // POST api/clients
         [HttpPost]
-        public IActionResult Post([FromBody]ClientForCreationDto clientForCreation)
+        public async Task<IActionResult> Post([FromBody]ClientForCreationDto clientForCreation)
         {
             var client = AutoMapper.Mapper.Map<Client>(clientForCreation);
+
+            var hrResponse = await _hrService.PostClientAsync(clientForCreation);
+            if (hrResponse.Token == null) return BadRequest("Could not create account");
+
+            var clientId = TokenParser.GetClientIdFromToken(hrResponse.Token);
+            client.Id = clientId;
 
             _clientRepository.Add(client);
             if (!_clientRepository.Save()) return BadRequest("Could not create client");
 
-            var result = AutoMapper.Mapper.Map<ClientWithTicketsAndReviewsDto>(client);
+            var result = AutoMapper.Mapper.Map<ClientWithTicketsAndReviewsAndTokenDto>(client);
+            result.Token = hrResponse.Token;
+
             return CreatedAtRoute("GetClient", new { id = client.Id }, result);
         }
 

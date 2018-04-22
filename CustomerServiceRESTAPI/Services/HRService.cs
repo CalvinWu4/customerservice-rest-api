@@ -8,6 +8,7 @@ using CustomerServiceRESTAPI.Entities;
 using CustomerServiceRESTAPI.Models;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace CustomerServiceRESTAPI.Services
 {
@@ -38,10 +39,13 @@ namespace CustomerServiceRESTAPI.Services
             var crendentials = new HRCustomerCrendential()
             {
                 username = clientForCreation.Email,
-                password = clientForCreation.Password
+                password = clientForCreation.Password,
+                type = "customer"
             };
 
-            var result = await client.PostAsync("http://kennuware-1772705765.us-east-1.elb.amazonaws.com/auth/create", new StringContent(JsonConvert.SerializeObject(crendentials)));
+            var ser = new StringContent(JsonConvert.SerializeObject(crendentials), Encoding.UTF8, "application/json");
+
+            var result = await client.PostAsync("https://api-gateway-343.herokuapp.com/auth/create", ser);
             if (!result.IsSuccessStatusCode) return null;
 
             var parsedResponse = JsonConvert.DeserializeObject<AuthHRDto>(await result.Content.ReadAsStringAsync());

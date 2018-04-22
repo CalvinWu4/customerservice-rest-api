@@ -15,6 +15,8 @@ namespace CustomerServiceRESTAPI
             {
                 cfg.CreateMap<Entities.Client, Models.ClientDto>()
                     .ForMember(dest => dest.Address, opt => opt.MapFrom(src => CreateAddress(src)));
+                cfg.CreateMap<Entities.Client, Models.ClientWithTicketsAndReviewsAndTokenDto>()
+                    .ForMember(dest => dest.Address, opt => opt.MapFrom(src => CreateAddress(src)));
                 cfg.CreateMap<Entities.Client, Models.ClientWithTicketsAndReviewsDto>()
                     .ForMember(dest => dest.Address, opt => opt.MapFrom(src => CreateAddress(src)));
                 cfg.CreateMap<Models.ClientForCreationDto, Entities.Client>();

@@ -8,7 +8,6 @@ namespace CustomerServiceRESTAPI.Entities
     public class Client
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]
