@@ -36,5 +36,13 @@ namespace CustomerServiceRESTAPI.Tests.Mocks
         {
             return Task.Run(async () => _agents);
         }
+
+        public Task<AuthHRDto> PostClientAsync(ClientForCreationDto client)
+        {
+            return Task.Run(async () => new AuthHRDto()
+            {
+                Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50VHlwZSI6ImNsaWVudCIsImlkIjoiMSJ9.D_FzD3ssFJFx9MZBVIoThMC5T3HiM86kSKOcoBmIvuk",
+            });
+        }
     }
 }

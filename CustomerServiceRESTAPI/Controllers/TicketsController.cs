@@ -56,13 +56,8 @@ namespace CustomerServiceRESTAPI.Controllers
 
         // POST api/tickets
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]TicketForCreationDto ticketForCreation, [FromHeader(Name = "token")]string token = null)
-        {
-            if (token == null) return NotFound("token not found");
-
-            var clientId = TokenParser.GetClientIdFromToken(token);
-            if (clientId == -1) return BadRequest("Bad token");
-                
+        public async Task<IActionResult> Post([FromBody]TicketForCreationDto ticketForCreation, [FromQuery(Name = "clientId")]int clientId)
+        { 
             var ticket = AutoMapper.Mapper.Map<Ticket>(ticketForCreation);
             // Look up the client by id
             var client = _clientRepository.Get(clientId);

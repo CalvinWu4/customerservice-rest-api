@@ -58,8 +58,7 @@ namespace CustomerServiceRESTAPI.Controllers
             _clientRepository.Add(client);
             if (!_clientRepository.Save()) return BadRequest("Could not create client");
 
-            var result = AutoMapper.Mapper.Map<ClientWithTicketsAndReviewsAndTokenDto>(client);
-            result.Token = hrResponse.Token;
+            var result = AutoMapper.Mapper.Map<ClientWithTicketsAndReviewsDto>(client);
 
             return CreatedAtRoute("GetClient", new { id = client.Id }, result);
         }

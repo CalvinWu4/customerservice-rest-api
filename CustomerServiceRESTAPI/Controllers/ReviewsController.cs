@@ -50,14 +50,8 @@ namespace CustomerServiceRESTAPI.Controllers
 
         // Get api/reviews
         [HttpPost]
-        public IActionResult Post([FromBody]ReviewDtoForCreation review, [FromHeader(Name = "token")]string token = null)
+        public IActionResult Post([FromBody]ReviewDtoForCreation review, [FromQuery(Name = "clientId")]int clientId)
         {
-            if (review == null) return BadRequest("Review is required");
-            if (token == null) return NotFound("token not found");
-
-            var clientId = TokenParser.GetClientIdFromToken(token);
-            if (clientId == -1) return BadRequest("Bad token");
-
             var finalReview = Mapper.Map<Review>(review);
             var client = _clientRepository.Get(clientId);
             if (client == null) return NotFound("Could not find client");

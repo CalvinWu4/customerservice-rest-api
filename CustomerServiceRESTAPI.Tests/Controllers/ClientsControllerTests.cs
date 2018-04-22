@@ -8,6 +8,7 @@ using CustomerServiceRESTAPI.Models;
 using CustomerServiceRESTAPI.Tests.Mocks;
 using Microsoft.AspNetCore.Mvc;
 using CustomerServiceRESTAPI.Services;
+using System.Threading.Tasks;
 
 namespace CustomerServiceRESTAPI.Tests.Controllers
 {
@@ -15,9 +16,9 @@ namespace CustomerServiceRESTAPI.Tests.Controllers
     public class ClientsControllerTests
     {
         [Fact]
-        public void Create_Client()
+        public async void Create_Client()
         {
-            var controller = new ClientsController(new ClientRepositoryMock());
+            var controller = new ClientsController(new ClientRepositoryMock(), new HRServiceMock());
             var clientForCreation = new ClientForCreationDto()
             {
                 FirstName = "Steven",
@@ -36,7 +37,7 @@ namespace CustomerServiceRESTAPI.Tests.Controllers
             };
 
 
-            var result = controller.Post(clientForCreation);
+            var result = await controller.Post(clientForCreation);
 
             var okResult = result.Should().BeOfType<CreatedAtRouteResult>().Subject;
             var client = okResult.Value.Should().BeAssignableTo<ClientWithTicketsAndReviewsDto>().Subject;
@@ -47,7 +48,7 @@ namespace CustomerServiceRESTAPI.Tests.Controllers
         [Fact]
         public void Get_All_Client()
         {
-            var controller = new ClientsController(new ClientRepositoryMock());
+            var controller = new ClientsController(new ClientRepositoryMock(), new HRServiceMock());
 
             var result = controller.Get();
             var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
@@ -58,7 +59,7 @@ namespace CustomerServiceRESTAPI.Tests.Controllers
         [Fact]
         public void Get_Client()
         {
-            var controller = new ClientsController(new ClientRepositoryMock());
+            var controller = new ClientsController(new ClientRepositoryMock(), new HRServiceMock());
 
             var result = controller.Get(ClientRepositoryMock.TestClient.Id);
             var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
@@ -70,7 +71,7 @@ namespace CustomerServiceRESTAPI.Tests.Controllers
         [Fact]
         public void Update_Client()
         {
-            var controller = new ClientsController(new ClientRepositoryMock());
+            var controller = new ClientsController(new ClientRepositoryMock(), new HRServiceMock());
             var clientForUpdate = new ClientForUpdateDto()
             {
                 FirstName = "Steven",
@@ -85,7 +86,7 @@ namespace CustomerServiceRESTAPI.Tests.Controllers
         [Fact]
         public void Delete_Client()
         {
-            var controller = new ClientsController(new ClientRepositoryMock());
+            var controller = new ClientsController(new ClientRepositoryMock(), new HRServiceMock());
 
             var result = controller.Delete(ClientRepositoryMock.TestClient.Id);
             var OkResult = result.Should().BeOfType<NoContentResult>().Subject;
