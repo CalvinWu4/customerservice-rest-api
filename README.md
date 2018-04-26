@@ -35,12 +35,9 @@ Press CTRL+R, A to run the tests in Visual Studio.
 
 ## Deployment
 
-Any changes to master will be automatically reflected in the production environment available through:
-`https://api-customerservice.azurewebsites.net/api/`
-
 For accessing the web application, please visit:
-`https://web-customersupport.azurewebsites.net/`
+https://github.com/RIT-SWEN-343-201705-KennUWare/customerservice-web
 
 ## More info
 
-API DOC `https://documenter.getpostman.com/view/3728250/customer-service-api-documentation/RW1XKfz7`
+API DOC: https://documenter.getpostman.com/view/3728250/customer-service-api-documentation/RW1XKfz7
